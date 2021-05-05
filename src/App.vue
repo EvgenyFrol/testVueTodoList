@@ -1,28 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <TodoWrap></TodoWrap>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TodoWrap from './components/TodoWrap.vue'
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+  components: { TodoWrap },
+  name: 'App'
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.section-enter {
+  transform: translateY(100%);
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.section-enter-to {
+  opacity: 1;
+  transform: none;
+ }
+
+.section-leave {
+  opacity: 1;
+}
+
+.section-leave-to {
+  opacity: 0;
 }
 </style>
