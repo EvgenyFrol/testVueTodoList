@@ -3,8 +3,9 @@
     .todoItems__wrap
       .todoItems__buttonAdds
         TodoModal(:title="'Добавить задачу'"
-                  :isOpen="isOpenPopup")
-          TodoForm(@isOpenPopup="isOpen"
+                  :isOpen="isOpenPopup"
+                  @onOpenPopup="isOpen")
+          TodoForm(@closeForm="isOpen"
                   :isOpen="isOpenPopup"
                   :isEdit="false"
                   )

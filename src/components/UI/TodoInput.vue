@@ -14,7 +14,11 @@
 export default {
   name: 'TodoInput',
   inheritAttrs: false,
-
+  data: () => {
+    return {
+      result: []
+    }
+  },
   props: {
     type: {
       type: String,
@@ -36,7 +40,6 @@ export default {
       type: String
     }
   },
-
   computed: {
     computedValue: {
       set (val) {
@@ -53,6 +56,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '/src/style/style.scss';
+
 .todoInput {
   width: 100%;
   position: relative;
@@ -64,6 +69,7 @@ export default {
   cursor: text;
   padding: 15px;
   margin: 10px;
+  background-color: #fff;
 
   &--invalid {
     border-color: #8f1f1f;
@@ -72,21 +78,19 @@ export default {
   &__input {
     font-size: 18px;
     min-height: 20px;
-    margin-bottom: 3px;
     border: 0;
     width: 100%;
     padding: 0;
     line-height: 25px;
-    background: transparent;
+    background: #fff;
     display: block;
 
-    &::placeholder {
+    &:placeholder {
       opacity: 0.3;
-      font: 600 16px/18px Ubuntu, sans-serif;
+      font: 600 16px/18px 'Ubuntu', sans-serif;
       position: absolute;
+      margin-bottom: 3px;
       top: 33%;
-      transition-property: font-size, line-height, top;
-      transition-duration: 0.2s;
     }
   }
 
@@ -98,7 +102,7 @@ export default {
     width: 100%;
     padding: 0;
     line-height: 25px;
-    background: transparent;
+    background: #fff;
     display: block;
   }
 

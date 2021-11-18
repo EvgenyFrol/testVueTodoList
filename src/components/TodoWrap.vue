@@ -5,14 +5,30 @@
         router-link(:to="{name: 'main'}")
           img(src="../assets/logo.png" alt="logo")
       .header__search
-        input(type='search')
+        TodoInput(type='text' v-model.trim='searchValue' placeholder="Поиск")
       .header__link
-        router-link(:to="{name: 'todoList'}") List
+        router-link(:to="{name: 'todoList', params: {value: searchValue}}") List
 </template>
 
 <script>
+import TodoInput from './UI/TodoInput.vue'
+
 export default {
-  name: 'TodoWrap'
+  name: 'TodoWrap',
+  components: {
+    TodoInput
+  },
+  data: () => {
+    return {
+      searchValue: '',
+      pathName: ''
+    }
+  },
+  watch: {
+    searchValue (val) {
+      this.$store.commit('CHANGE_SEARCH_VALUE', val)
+    }
+  }
 }
 </script>
 
@@ -31,6 +47,14 @@ export default {
 
   &__logo {
     width: 60px;
+  }
+
+  &__link {
+    font: 700 18px/24px Ubuntu, sans-serif;
+
+    a {
+      text-decoration: none;
+    }
   }
 }
 </style>

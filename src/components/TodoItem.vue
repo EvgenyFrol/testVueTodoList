@@ -9,7 +9,7 @@
           @changeBackground="changeBackground"
           @changeStatus="changeStatus")
       .todoItems__itemTitle
-        span(class="todoItems__itemLink" @click="shareData") {{title}}
+        span.todoItems__itemLink(@click="shareData") {{title}}
       .todoItems__itemTitleDel(v-if="!item.isDeleted")
         span.todoItems__itemTitleDelButton(@click="removeTodos(item)")
       .todoItems__itemTitleRestore(v-if="item.isDeleted")
@@ -45,7 +45,7 @@ export default {
       this.$store.commit('REMOVE_TODOS', item)
     },
     shareData () {
-      this.$router.push({ name: 'todoPage', params: { id: this.id, item: { id: this.id, title: this.title, article: this.article } } })
+      this.$router.push({ name: 'todoPage', params: { id: this.id } })
     },
     changeBackground (value, id) {
       this.$emit('changeBackground', { background: value, id: this.id })

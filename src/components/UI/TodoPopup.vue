@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     closePopup () {
-      this.$emit('closePopup', this.isOpen)
+      this.$emit('closePopup', false)
     }
   }
 }
@@ -41,14 +41,9 @@ export default {
   right: 0;
   border: 5px solid #000;
   border-radius: 20px;
-  transition: right 0.3s ease;
   background: #fff;
   z-index: 4;
   padding: 88px 100px;
-
-  &--open {
-    right: 0;
-  }
 
   &__wrapper {
     padding: 0 0 17px 0;

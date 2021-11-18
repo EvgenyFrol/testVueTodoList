@@ -2,12 +2,12 @@
 .modal
   TodoButton(:title="title"
              :isDisabled="false"
-             @click.native="isShowModal = !isShowModal")
-  .modal-bg(v-if="isShowModal")
+             @click.native="setIsOpenPopup(true)")
+  .modal-bg(v-if="onOpenModal")
   transition(name="modal")
-    TodoPopup(v-if="isShowModal"
+    TodoPopup(v-if="onOpenModal"
               :titlePopup="title"
-              @closePopup="isShowModal = !isShowModal"
+              @closePopup="setIsOpenPopup(false)"
               key="modal")
       slot
 </template>
@@ -21,12 +21,24 @@ export default {
   components: { TodoButton, TodoPopup },
   data () {
     return {
-      isShowModal: this.isOpen
+      onOpenModal: false
     }
   },
   props: {
     title: String,
     isOpen: Boolean
+  },
+  watch: {
+    isOpen (val) {
+      this.onOpenModal = val
+    }
+  },
+
+  methods: {
+    setIsOpenPopup (val) {
+      this.$emit('onOpenPopup', val)
+      this.onOpenModal = val
+    }
   }
 }
 </script>
@@ -41,27 +53,26 @@ export default {
   z-index: 4;
   background: rgba(66, 66, 66, 0.5);
 }
-.modal-enter {
-  transition: transform 0.3s ease;
-  transform: translateX(100%);
-  opacity: 1;
-}
 
+.modal-enter,
 .modal-enter-active {
-  opacity: 1;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
 }
 
 .modal-enter-to {
-  opacity: 1;
-  transform: none;
+  transition: transform 0.3s ease;
+  transform: translateX(0);
 }
 
 .modal-leave {
-  opacity: 1;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
 }
 
 .modal-leave-to {
-  opacity: 0;
+  transition: transform 0.3s ease;
+  transform: translateX(100%);
 }
 
 </style>

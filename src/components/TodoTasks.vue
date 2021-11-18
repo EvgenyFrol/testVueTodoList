@@ -2,7 +2,7 @@
 .todoTasks
   transition(name="todoItem")
     .todoTasks__isActive(v-if="isActive == 0")
-      TodoItem(v-for="(item) in data"
+      TodoItem(v-for="(item) in searchHandler"
             v-if="!item.isDeleted"
             :isActive="isActive"
             :key="item.id"
@@ -15,7 +15,7 @@
             @changeBackground="changeBackground"
             )
     .todoTasks__isDeleted(v-if="isActive == 1")
-      TodoItem(v-for="(item) in data"
+      TodoItem(v-for="(item) in searchHandler"
             v-if="item.isDeleted"
             :isActive="isActive"
             :key="item.id"
@@ -47,13 +47,19 @@ export default {
   props: {
     isActive: Number
   },
+  computed: {
+    searchHandler () {
+      return this.data.filter(elem => {
+        return elem.title.toLowerCase().includes(this.$store.getters.getSearchValue)
+      })
+    }
+  },
   methods: {
     openPopup () {
       this.isOpenPopup = !this.isOpenPopup
     },
     changeBackground (value) {
       this.background = value.background
-
       this.$store.commit('CHANGE_BACKGROUND', value)
     }
   },

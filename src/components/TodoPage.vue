@@ -22,7 +22,6 @@ export default {
   components: { TodoModal, TodoForm },
   data () {
     return {
-      todoData: {},
       isOpenPopup: false
     }
   },
@@ -37,11 +36,10 @@ export default {
       this.isOpenPopup = !value
     }
   },
-  created () {
-    this.todoData = this.$route.params.item
-  },
-  updated () {
-    this.todoData = this.$route.params.item
+  computed: {
+    todoData () {
+      return this.$store.getters.getTodoList.find(el => el.id === +this.$route.params.id)
+    }
   }
 }
 </script>

@@ -21,10 +21,15 @@ const store = new Vuex.Store({
       id: '03',
       status: 'Выполнено',
       background: '#389aa7'
-    }],
-    todos: []
+    }
+    ],
+    todos: [],
+    searchValue: ''
   },
   mutations: {
+    CHANGE_SEARCH_VALUE (state, payload) {
+      state.searchValue = payload
+    },
     ADD_TODOS (state, payload) {
       state.todos.push(payload)
     },
@@ -41,13 +46,11 @@ const store = new Vuex.Store({
       state.todos.forEach(elem => {
         if (elem.id === payload.id) elem.isDeleted = true
       })
-      console.log(state.todos)
     },
     RESTORE_TODOS (state, payload) {
       state.todos.forEach(elem => {
         if (elem.id === payload.id) elem.isDeleted = false
       })
-      console.log(state.todos)
     },
     CHANGE_BACKGROUND (state, payload) {
       state.todos.forEach(elem => {
@@ -67,6 +70,9 @@ const store = new Vuex.Store({
     },
     getStatus (state) {
       return state.statusItems
+    },
+    getSearchValue (state) {
+      return state.searchValue
     }
   }
 })

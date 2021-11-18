@@ -3,7 +3,7 @@
   form(:validates="$v.todo.title", @submit.prevent="submit")
     .todoFormAdds__inputs
       TodoInput(type='text' v-model="todo.title" :v="$v.todo.title" :error="!$v.todo.title.required" :name="'title'" placeholder="Название задачи")
-      .error(v-if="!$v.todo.title.required") Поле не должно быть пустым!
+      .error(v-if="!$v.todo.title.required") {{errorText}}
       TodoInput(type='text' v-model.trim='todo.article1' placeholder="Пункт №1")
       TodoInput(type='text' v-model.trim='todo.article2' placeholder="Пункт №2")
       TodoInput(type='text' v-model.trim='todo.article3' placeholder="Пункт №3")
@@ -32,16 +32,16 @@ export default {
     TodoButton
   },
   props: {
-    isOpen: Boolean,
     taskId: Number,
+    data: Object,
     task: Object,
-    isEdit: Boolean,
-    data: Object
+    isEdit: Boolean
   },
   data () {
     return {
-      itemData: this.data,
+      errorText: 'Поле не должно быть пустым!',
       isEditing: this.isEdit,
+      itemData: {},
       isOpenForm: this.isOpen,
       todo: {
         id: '',
@@ -73,8 +73,7 @@ export default {
         isDeleted: false
       })
 
-      this.isOpenForm = !this.isOpenForm
-      this.$emit('isOpenPopup', this.isOpenForm)
+      this.$emit('closeForm', false)
     },
     editTodos () {
       const arrTodo = [this.todo.article1, this.todo.article2, this.todo.article3, this.todo.article4, this.todo.article5]
@@ -88,9 +87,10 @@ export default {
         status: 'Ожидает выполнения',
         isDeleted: false
       })
+
+      this.$emit('closeForm', false)
     },
     submit () {
-      console.log('submit!')
       this.$v.$touch()
       if (this.$v.$invalid) {
         this.submitStatus = 'ERROR'
@@ -111,6 +111,7 @@ export default {
     }
   },
   mounted () {
+    this.itemData = this.data
     if (this.isEditing) {
       this.todo.id = this.itemData.id
       this.todo.title = this.itemData.title
@@ -120,6 +121,7 @@ export default {
       this.todo.article4 = this.itemData.article[3]
       this.todo.article5 = this.itemData.article[4]
     }
+    this.isRequired = this.$v.todo.title.required
   }
 }
 </script>

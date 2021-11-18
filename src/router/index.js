@@ -8,7 +8,7 @@ export default new VueRouter({
   mode: 'history',
   routes: [
     { path: '/', name: 'main', component: TodoMain },
-    { path: '/list', name: 'todoList', component: TodoList },
+    { path: '/list', name: 'todoList', component: TodoList, props: true },
     { path: '/list/:id', name: 'todoPage', component: TodoPage },
     { path: '/list/:id/edit', name: 'todoPopup', component: TodoPopup }
   ]
